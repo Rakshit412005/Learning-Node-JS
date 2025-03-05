@@ -24,7 +24,7 @@ else if(req.url==='/calculator'){
         <br>
         <form action="/result" method="POST">
         <input type="number" placeholder="First Num" name="first"/>
-        <input type="number" placeholder="Second Num" name="first"/>
+        <input type="number" placeholder="Second Num" name="second"/>
         <input type="submit" placeholder="Sum" />
         </form>
         <br>

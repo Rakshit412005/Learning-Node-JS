@@ -6,6 +6,8 @@ const sumRequestHandler=(req,res)=>{
         const parsedBody=Buffer.concat(body).toString();
         const first= new URLSearchParams(parsedBody).get('first');
         const second= new URLSearchParams(parsedBody).get('second');
+        const result = Number(first) + Number(second);
+
         res.setHeader('Context-type','text/html');
        res.write(`
         <html>
@@ -13,9 +15,12 @@ const sumRequestHandler=(req,res)=>{
         <head><title>Result page</title></head>
         <body><h1>Calculator Page</h1>
         <br>
-
-
-        `)
+        <h1>The sum is ${result}<h1>
+        </body>
+        </head>
+        </html>
+    `);
+    return res.end();
      })
      
 }
