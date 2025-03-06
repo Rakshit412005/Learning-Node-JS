@@ -16,6 +16,8 @@ const sumRequestHandler=(req,res)=>{
         <body><h1>Calculator Page</h1>
         <br>
         <h1>The sum is ${result}<h1>
+        <br>
+        <h3><a href="/">Go to home</a></h3>
         </body>
         </head>
         </html>
