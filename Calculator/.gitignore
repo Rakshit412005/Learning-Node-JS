@@ -1,0 +1,13 @@
+# Node.js dependencies (node_modules folder ignore hoga)
+node_modules/
+
+# Lock file (optional, lekin recommended)
+package-lock.json
+
+# Logs aur debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE/Editor specific files (agar VS Code use kar rahe ho)
+.vscode/
