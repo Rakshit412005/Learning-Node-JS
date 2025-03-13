@@ -3,7 +3,7 @@ const express=require('express');
 const app=express();
 app.use((req,res,next)=>{
     console.log("Came in first middleware",req.url,req.method);
-    res.send("<h1>helloooooo beta</h1>");
+    // res.send("<h1>helloooooo beta</h1>");
     next();
 
 });
