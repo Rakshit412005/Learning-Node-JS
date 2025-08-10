@@ -16,15 +16,12 @@ app.get('/read', async (req,res)=>{
 
     res.render("read",{users});
 })
-app.get('/delete', async (req, res) => {
+app.get('/delete/:id', async (req, res) => {
    
-  try {
-    let deletedUsers = await userModel.deleteMany({ name: "Nishchay Kumar" });
-    res.send(`Deleted ${deletedUsers.deletedCount} users named Rakshit Kumar.`);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error deleting users");
-  }
+  
+    let deletedUsers = await userModel.findOneAndDelete({ _id: req.params.id });
+    res.redirect("/read");
+  
 });
 
 app.post('/create', async (req,res)=>{
@@ -35,7 +32,7 @@ app.post('/create', async (req,res)=>{
         email : email,
         image: image
     })
-    res.send(createduser);
+    res.redirect("/read");
 })
 console.log("server running at port 3000")
 app.listen(3000);
