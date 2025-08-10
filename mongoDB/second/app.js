@@ -8,7 +8,10 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
-    res.render("index")
+    res.render("index");
+})
+app.get('/read',(req,res)=>{
+    res.render('read');
 })
 console.log("server running at port 3000")
 app.listen(3000);
