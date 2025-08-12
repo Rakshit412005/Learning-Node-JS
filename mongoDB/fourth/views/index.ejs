@@ -7,6 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-  <h1>index.ejs</h1> 
+  
+    <div class="w-full h-screen bg-zinc-900 p-10 text-white">
+        <h1>Create user</h1>
+        <form method="post" action="/create">
+            <input class="px-3 py-2 m-2 rounded-md bg-transparent border-2 border-zic-800  text-white" type="text" placeholder="username" name="username">
+            <input class="px-3 py-2 m-2 rounded-md bg-transparent border-2 border-zic-800  text-white" type="text" placeholder="email" name="email">
+            <input class="px-3 py-2 m-2 rounded-md bg-transparent border-2 border-zic-800  text-white" type="text" placeholder="password" name="password">
+            <input class="px-3 py-2 m-2 rounded-md bg-transparent border-2 border-zic-800  text-white" type="number" placeholder="age" name="age">
+            <input class="px-3 py-2 m-2 bg-blue-500 rounded-md" type="submit" value="Create user">
+        </form>
+    </div>
 </body>
 </html>
