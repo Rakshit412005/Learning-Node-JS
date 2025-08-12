@@ -26,7 +26,7 @@ app.post('/create',  (req,res)=>{
                   email:email,
                   username:username
              });
-            let token= jwt.sign({email},"secret key");
+            let token= jwt.sign({email:email},"secret key");
             res.cookie("token",token);
              res.send(user);
 
@@ -34,6 +34,30 @@ app.post('/create',  (req,res)=>{
     })
  
    
+});
+app.get('/logout',(req,res)=>{
+    res.cookie("token","");
+    res.redirect('/');
+});
+app.get('/login',(req,res)=>{
+    res.render("login");
+ })
+app.post('/login', async (req,res)=>{
+   let user = await usermodel.findOne({email:req.body.email})
+   if (!user){
+    return res.send("email or password is wrong");
+   }
+   bcrypt.compare(req.body.password,user.password,function(err,result){
+    console.log(result);
+    if(result){
+        let token= jwt.sign({email:user.email},"secret key");
+        res.cookie("token",token);
+        res.send("yes you can login");   
+    }
+    else{
+        res.send("no you cannot login");
+    }
+   })
 })
 
 app.listen(3000);

@@ -33,6 +33,8 @@ app.get('/read',(req,res)=>{
     let data = jwt.verify(req.cookies.token,"secret");
     console.log("data - ",data);
     res.send("read page");
- })
+ });
+ 
+
 console.log("server listening at port 3000");
 app.listen(3000);
