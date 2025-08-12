@@ -1,0 +1,8 @@
+create user account
+import mongoose
+import Schema
+create model
+create user then get password 
+hash the password
+create JWT token and store it in the form of cookie on frontend
+when we will login we will decrypt the token to get the email.
