@@ -19,10 +19,10 @@ app.get("/create", async (req,res)=>{
 app.get('/create/post', async (req,res)=>{
     let post = await postModel.create({
         postdata: "hello how are you",
-        user: "689e21be2f5cf1de59362359"
+        user: "689e21be2f5cf1de59362359" // post banate vakt user ki id dedi to post ko pta h user kon h
     })
 
-    let user = await userModel.findOne({_id: "689e21be2f5cf1de59362359"});
+    let user = await userModel.findOne({_id: "689e21be2f5cf1de59362359"}); // jaise hee post ban gya user ke post array m post ki id dedi
     user.posts.push(post._id);
     await user.save();
     res.send({post,user});
