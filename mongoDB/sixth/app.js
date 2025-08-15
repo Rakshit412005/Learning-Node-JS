@@ -13,15 +13,31 @@ app.use(cookieParser());
 
 app.get('/',(req,res)=>{
     res.render("index");
-})
+});
 
 app.get('/login',(req,res)=>{
     res.render("login");
-})
+});
 
-app.get('/profile',isLoggedIn, (req,res)=>{
-    res.render("profile");
-})
+app.get('/profile',isLoggedIn, async (req,res)=>{
+    let user = await usermodel.findOne({email:req.user.email});
+    user.populate("posts");
+    console.log(user);
+    res.render("profile",{user});
+});
+
+app.post('/post',isLoggedIn, async (req,res)=>{
+    let {content} = req.body;
+    let user = await usermodel.findOne({email : req.user.email});
+    let post = await postmodel.create({
+        user : user._id,
+        content:content
+    });
+    user.posts.push(post._id);
+    await user.save();
+    res.redirect('/profile');
+
+});
 
 app.post('/register', async (req,res)=>{
     let {email,username,name,age,password} = req.body;
