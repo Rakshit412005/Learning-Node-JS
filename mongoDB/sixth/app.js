@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const app = express();
 const usermodel = require('./models/user');
 const cookieParser = require('cookie-parser');
@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());
 
-app.get('/',(res,req)=>{
+app.get('/',(req,res)=>{
     res.render("index");
 })
 app.listen(3000);
