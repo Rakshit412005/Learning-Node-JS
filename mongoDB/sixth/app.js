@@ -26,9 +26,10 @@ app.get('/profile',isLoggedIn, async (req,res)=>{
 });
 
 app.get('/like/:id',isLoggedIn, async (req,res)=>{
-    let user = await postmodel.findOne({_id:req.user.email}).populate("posts");
-    console.log(user);
-    res.render("profile",{user});
+    let post = await postmodel.findOne({_id:req.params.id}).populate("user");
+    post.likes.push(req.user.userid);
+    await   post.save();
+    res.render("/profile",{user});
 });
 
 app.post('/post',isLoggedIn, async (req,res)=>{
