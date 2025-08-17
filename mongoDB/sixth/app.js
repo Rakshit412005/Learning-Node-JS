@@ -5,6 +5,7 @@ const postmodel = require('./models/posts');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
 
 app.set("view engine","ejs");
 app.use(express.json());
@@ -25,11 +26,25 @@ app.get('/profile',isLoggedIn, async (req,res)=>{
     res.render("profile",{user});
 });
 
-app.get('/like/:id',isLoggedIn, async (req,res)=>{
-    let post = await postmodel.findOne({_id:req.params.id}).populate("user");
-    post.likes.push(req.user.userid);
-    await   post.save();
-    res.render("/profile",{user});
+app.get('/like/:id', isLoggedIn, async (req,res)=>{
+    const { id } = req.params;
+
+    // Validate id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.redirect("/profile");   // if id is invalid, just go back
+    }
+
+    let post = await postmodel.findOne({_id:id}).populate("user");
+    if (!post) return res.redirect("/profile");
+
+    if (post.likes.indexOf(req.user.userid) === -1){
+        post.likes.push(req.user.userid);
+    } else {
+        post.likes.splice(post.likes.indexOf(req.user.userid),1);
+    }
+
+    await post.save();
+    res.redirect("/profile");
 });
 
 app.post('/post',isLoggedIn, async (req,res)=>{
@@ -61,7 +76,7 @@ app.post('/register', async (req,res)=>{
                     password:hash,
                     email:email
                 });
-               let token = jwt.sign({email : email, useriid : user._id}, "secret key");
+               let token = jwt.sign({email : email, userid : user._id}, "secret key");
                res.cookie("token",token);
                res.send("registered");
             })
@@ -79,7 +94,7 @@ app.post('/login', async (req,res)=>{
     else{
        bcrypt.compare(password,user.password, function(err,result){
         if(result){
-            let token = jwt.sign({email : email, useriid : user._id}, "secret key");
+            let token = jwt.sign({email : email, userid : user._id}, "secret key");
             res.cookie("token",token);
             res.status(200).redirect("/profile");
         }
@@ -106,4 +121,6 @@ function isLoggedIn(req,res,next){
     }   
 }
 
-app.listen(3000);
+app.listen(3000, ()=>{
+    console.log("Server running on http://localhost:3000");
+});
